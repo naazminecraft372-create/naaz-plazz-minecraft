@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAAZ PLAZA MINECRAFT</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#171717;font-family:Arial}
+header{height:65px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #ddd;position:sticky;top:0;background:white;z-index:2}
+.logo{font-size:19px;font-weight:bold}.logo span{color:red}
+button{cursor:pointer;border:0;border-radius:8px;padding:10px 15px}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+aside{width:200px;padding:20px 10px;border-right:1px solid #ddd}
+.nav{padding:14px;border-radius:9px;cursor:pointer}
+.nav:hover,.active{background:#eee;font-weight:bold}
+main{padding:25px;flex:1;min-width:0}
+.banner{background:linear-gradient(120deg,#171717,#555);color:white;padding:30px;border-radius:15px;margin-bottom:25px}
+.banner h1{margin-top:0}
+.banner a{display:inline-block;background:red;color:white;text-decoration:none;padding:11px 16px;border-radius:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.video{cursor:pointer}
+.video img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px}
+.title{font-weight:bold;margin:9px 0}
+.meta{font-size:13px;color:#777}
+.panel{background:#f2f2f2;padding:20px;border-radius:12px;max-width:500px;margin:15px 0}
+input{width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ccc;border-radius:8px}
+.primary{background:red;color:white}
+.delete{background:#b3261e;color:white;margin-top:8px}
+.empty{padding:25px;background:#eee;border-radius:10px}
+@media(max-width:650px){aside{width:60px;padding:10px 4px}.nav{font-size:0;text-align:center}.nav:first-letter{font-size:18px}main{padding:13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.logo{font-size:14px}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">▶ <span>NAAZ</span> PLAZA MINECRAFT</div>
+ <button onclick="toggleTheme()">🌙</button>
+</header>
+
+<div class="layout">
+<aside>
+ <div class="nav active" onclick="showHome()">⌂ Home</div>
+ <div class="nav" onclick="showVideos()">▣ Videos</div>
+ <div class="nav" onclick="showShorts()">▶ Shorts</div>
+ <div class="nav" onclick="showPlaylists()">▤ Playlists</div>
+ <hr>
+ <div class="nav" onclick="showLogin()">⚙ Author Login</div>
+</aside>
+
+<main>
+ <section class="banner">
+  <h1>NAAZ PLAZA MINECRAFT</h1>
+  <p>Welcome to my Minecraft gaming channel!</p>
+  <p>Creator: <b>NAAZ</b></p>
+  <a href="https://youtube.com/@naaz_plaza_minecraft" target="_blank">Visit YouTube Channel</a>
+ </section>
+ <div id="content"></div>
+</main>
+</div>
+
+<script>
+let videos=JSON.parse(localStorage.getItem("naazVideos")||"[]");
+
+function save(){
+ localStorage.setItem("naazVideos",JSON.stringify(videos));
+}
+
+function showList(list){
+ let html='<h2>Videos</h2><div class="grid">';
+ if(!list.length) html+='<div class="empty">Abhi koi video add nahi hua.</div>';
+ list.forEach(v=>{
+ html+=`
+ <div class="video" onclick="window.open('${v.url}','_blank')">
+ <img src="${v.thumbnail}" onerror="this.src='https://placehold.co/640x360?text=Minecraft'">
+ <div class="title">${escapeHTML(v.title)}</div>
+ <div class="meta">NAAZ PLAZA MINECRAFT</div>
+ </div>`;
+ });
+ document.getElementById("content").innerHTML=html+"</div>";
+}
+
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function showHome(){showList(videos)}
+function showVideos(){showList(videos)}
+function showShorts(){showList(videos.filter(v=>v.short))}
+function showPlaylists(){
+ document.getElementById("content").innerHTML="<h2>Playlists</h2><div class='empty'>Coming Soon!</div>";
+}
+
+function showLogin(){
+ document.getElementById("content").innerHTML=`
+ <h2>Author Login</h2>
+ <div class="panel">
+ <p>Enter your author name</p>
+ <input id="author" placeholder="Author name">
+ <button class="primary" onclick="login()">Continue</button>
+ <p id="status"></p>
+ </div>`;
+}
+
+function login(){
+ let name=document.getElementById("author").value.trim();
+ if(name==="naazaman7"){
+  showAdmin();
+ }else{
+  document.getElementById("status").innerText="Incorrect author name!";
+ }
+}
+
+function showAdmin(){
+ let html=`
+ <h2>Creator Studio</h2>
+ <div class="panel">
+ <h3>Add YouTube Video</h3>
+ <input id="videoLink" placeholder="Paste YouTube video link">
+ <input id="videoTitle" placeholder="Video title">
+ <button class="primary" onclick="addVideo()">Publish Video</button>
+ <p id="status"></p>
+ </div>
+ <h2>Manage Videos</h2><div class="grid">`;
+
+ videos.forEach((v,i)=>{
+ html+=`
+ <div class="video">
+ <img src="${v.thumbnail}">
+ <div class="title">${escapeHTML(v.title)}</div>
+ <button class="delete" onclick="deleteVideo(${i})">Delete</button>
+ </div>`;
+ });
+ document.getElementById("content").innerHTML=html+"</div>";
+}
+
+function getVideoID(link){
+ try{
+  let u=new URL(link);
+  if(u.hostname==="youtu.be")return u.pathname.slice(1).split("/")[0];
+  if(u.pathname==="/watch")return u.searchParams.get("v");
+  if(u.pathname.includes("/shorts/")||u.pathname.includes("/embed/"))
+   return u.pathname.split("/")[2];
+ }catch(e){}
+ return null;
+}
+
+function addVideo(){
+ let link=document.getElementById("videoLink").value.trim();
+ let title=document.getElementById("videoTitle").value.trim();
+ let id=getVideoID(link);
+ let status=document.getElementById("status");
+
+ if(!id||!/^[A-Za-z0-9_-]{11}$/.test(id)){
+  status.innerText="Valid YouTube link paste karo!";
+  return;
+ }
+ if(!title){
+  status.innerText="Video title enter karo!";
+  return;
+ }
+
+ videos.unshift({
+  id:id,
+  url:"https://www.youtube.com/watch?v="+id,
+  title:title,
+  thumbnail:"https://i.ytimg.com/vi/"+id+"/hqdefault.jpg",
+  short:link.includes("/shorts/")
+ });
+ save();
+ showAdmin();
+}
+
+function deleteVideo(i){
+ if(confirm("Delete this video?")){
+  videos.splice(i,1);
+  save();
+  showAdmin();
+ }
+}
+
+function toggleTheme(){
+ document.body.style.background=
+ document.body.style.background==="black"?"white":"black";
+ document.body.style.color=
+ document.body.style.color==="white"?"#171717":"white";
+}
+
+showHome();
+</script>
+</body>
+</html>
