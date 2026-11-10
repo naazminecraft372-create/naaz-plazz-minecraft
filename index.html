@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,187 +7,304 @@
 <title>NAAZ PLAZA MINECRAFT</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#fff;color:#171717;font-family:Arial}
-header{height:65px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #ddd;position:sticky;top:0;background:white;z-index:2}
-.logo{font-size:19px;font-weight:bold}.logo span{color:red}
-button{cursor:pointer;border:0;border-radius:8px;padding:10px 15px}
-.layout{display:flex;min-height:calc(100vh - 65px)}
-aside{width:200px;padding:20px 10px;border-right:1px solid #ddd}
-.nav{padding:14px;border-radius:9px;cursor:pointer}
-.nav:hover,.active{background:#eee;font-weight:bold}
-main{padding:25px;flex:1;min-width:0}
-.banner{background:linear-gradient(120deg,#171717,#555);color:white;padding:30px;border-radius:15px;margin-bottom:25px}
-.banner h1{margin-top:0}
-.banner a{display:inline-block;background:red;color:white;text-decoration:none;padding:11px 16px;border-radius:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
-.video{cursor:pointer}
-.video img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px}
-.title{font-weight:bold;margin:9px 0}
-.meta{font-size:13px;color:#777}
-.panel{background:#f2f2f2;padding:20px;border-radius:12px;max-width:500px;margin:15px 0}
-input{width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ccc;border-radius:8px}
-.primary{background:red;color:white}
-.delete{background:#b3261e;color:white;margin-top:8px}
-.empty{padding:25px;background:#eee;border-radius:10px}
-@media(max-width:650px){aside{width:60px;padding:10px 4px}.nav{font-size:0;text-align:center}.nav:first-letter{font-size:18px}main{padding:13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.logo{font-size:14px}}
+body{margin:0;font-family:Arial,sans-serif;background:#f9f9f9;color:#111}
+header{height:64px;background:white;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:5;border-bottom:1px solid #eee}
+.logo{font-size:21px;font-weight:bold;color:#e62117}
+.logo span{color:#111}
+button{cursor:pointer;border:0;border-radius:20px;padding:10px 16px;font-weight:bold}
+.login-btn{background:#eee}
+.layout{display:flex}
+aside{width:210px;padding:20px 12px;background:white;min-height:calc(100vh - 64px)}
+aside button{display:block;width:100%;text-align:left;background:transparent;margin-bottom:8px;font-size:15px}
+aside button:hover{background:#eee}
+main{padding:24px;width:100%;max-width:1400px;margin:auto}
+.banner{background:linear-gradient(120deg,#151515,#434343);color:white;border-radius:15px;padding:35px 25px;margin-bottom:25px}
+.banner h1{margin:0 0 10px;font-size:30px}
+.banner p{margin:0;color:#ddd}
+h2{font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #00000010}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#ddd;display:block}
+.info{padding:12px}
+.info h3{font-size:16px;margin:0 0 10px}
+.info a{color:#555;text-decoration:none;font-size:13px}
+.delete{background:#ffe5e5;color:#b00000;margin-top:10px}
+.tag{font-size:11px;background:#eee;padding:5px 9px;border-radius:10px;display:inline-block;margin-bottom:8px}
+.empty{color:#777;padding:25px 0}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:10;align-items:center;justify-content:center;padding:15px}
+.box{background:white;border-radius:14px;padding:24px;width:100%;max-width:420px}
+.box h2{margin-top:0}
+input,select{width:100%;padding:13px;margin:8px 0 14px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+.primary{background:#e62117;color:white}
+.cancel{background:#eee;margin-left:8px}
+.status{font-size:13px;color:#b00000;min-height:18px}
+footer{text-align:center;color:#888;padding:30px}
+@media(max-width:650px){
+ aside{width:65px;padding:12px 5px}
+ aside button{font-size:0;text-align:center;padding:12px 3px}
+ main{padding:14px}
+ .banner{padding:25px 18px}
+ .banner h1{font-size:23px}
+ header{padding:0 12px}
+ .logo{font-size:17px}
+}
 </style>
 </head>
 <body>
 
 <header>
- <div class="logo">▶ <span>NAAZ</span> PLAZA MINECRAFT</div>
- <button onclick="toggleTheme()">🌙</button>
+  <div class="logo">▶ <span>NAAZ PLAZA MINECRAFT</span></div>
+  <button class="login-btn" onclick="openLogin()">Author Login</button>
 </header>
 
 <div class="layout">
 <aside>
- <div class="nav active" onclick="showHome()">⌂ Home</div>
- <div class="nav" onclick="showVideos()">▣ Videos</div>
- <div class="nav" onclick="showShorts()">▶ Shorts</div>
- <div class="nav" onclick="showPlaylists()">▤ Playlists</div>
- <hr>
- <div class="nav" onclick="showLogin()">⚙ Author Login</div>
+  <button onclick="showAll()">🏠 Home</button>
+  <button onclick="showAll()">🎬 Videos</button>
+  <button onclick="showShorts()">📱 Shorts</button>
+  <button onclick="openLogin()">🔐 Author Login</button>
 </aside>
 
 <main>
- <section class="banner">
-  <h1>NAAZ PLAZA MINECRAFT</h1>
-  <p>Welcome to my Minecraft gaming channel!</p>
-  <p>Creator: <b>NAAZ</b></p>
-  <a href="https://youtube.com/@naaz_plaza_minecraft" target="_blank">Visit YouTube Channel</a>
- </section>
- <div id="content"></div>
+  <section class="banner">
+    <h1>NAAZ PLAZA MINECRAFT</h1>
+    <p>Welcome to the official Minecraft gaming channel!</p>
+    <p style="margin-top:12px">@naaz_plaza_minecraft</p>
+  </section>
+
+  <h2 id="heading">Latest Videos</h2>
+  <div class="grid" id="videos">
+    <p class="empty">Loading videos...</p>
+  </div>
 </main>
 </div>
 
+<footer>© NAAZ PLAZA MINECRAFT</footer>
+
+<div class="modal" id="loginModal">
+  <div class="box">
+    <h2>Author Login</h2>
+    <input type="password" id="adminKey" placeholder="Enter Admin Secret Key">
+    <p class="status" id="loginStatus"></p>
+    <button class="primary" onclick="login()">Login</button>
+    <button class="cancel" onclick="closeLogin()">Cancel</button>
+  </div>
+</div>
+
+<div class="modal" id="addModal">
+  <div class="box">
+    <h2>Publish Video</h2>
+    <input id="videoTitle" placeholder="Video title">
+    <input id="videoUrl" placeholder="YouTube video URL">
+    <select id="videoType">
+      <option value="false">Normal Video</option>
+      <option value="true">YouTube Short</option>
+    </select>
+    <p class="status" id="addStatus"></p>
+    <button class="primary" onclick="addVideo()">Publish</button>
+    <button class="cancel" onclick="closeAdd()">Cancel</button>
+  </div>
+</div>
+
 <script>
-let videos=JSON.parse(localStorage.getItem("naazVideos")||"[]");
+const API = "/.netlify/functions/videos";
+let adminToken = sessionStorage.getItem("naaz_admin_token") || "";
+let currentFilter = "all";
+let videoCache = [];
 
-function save(){
- localStorage.setItem("naazVideos",JSON.stringify(videos));
+async function apiRequest(method = "GET", body = null, token = adminToken) {
+  const headers = {};
+  if (body) headers["Content-Type"] = "application/json";
+  if (token) headers["Authorization"] = "Bearer " + token;
+
+  const response = await fetch(API, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "Request failed");
+  return data;
 }
 
-function showList(list){
- let html='<h2>Videos</h2><div class="grid">';
- if(!list.length) html+='<div class="empty">Abhi koi video add nahi hua.</div>';
- list.forEach(v=>{
- html+=`
- <div class="video" onclick="window.open('${v.url}','_blank')">
- <img src="${v.thumbnail}" onerror="this.src='https://placehold.co/640x360?text=Minecraft'">
- <div class="title">${escapeHTML(v.title)}</div>
- <div class="meta">NAAZ PLAZA MINECRAFT</div>
- </div>`;
- });
- document.getElementById("content").innerHTML=html+"</div>";
+async function loadVideos() {
+  const container = document.getElementById("videos");
+  try {
+    const data = await apiRequest();
+    videoCache = data.videos || [];
+    renderVideos();
+  } catch (error) {
+    container.innerHTML = '<p class="empty">Unable to load videos. Please refresh and try again.</p>';
+  }
 }
 
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function renderVideos() {
+  const container = document.getElementById("videos");
+  const list = currentFilter === "shorts"
+    ? videoCache.filter(v => v.short)
+    : videoCache;
+
+  if (!list.length) {
+    container.innerHTML = '<p class="empty">Abhi koi video publish nahi hua hai.</p>';
+    return;
+  }
+
+  container.replaceChildren();
+
+  list.forEach(video => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.className = "thumb";
+    img.src = video.thumbnail;
+    img.alt = video.title;
+    img.loading = "lazy";
+
+    const info = document.createElement("div");
+    info.className = "info";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = video.short ? "SHORT" : "VIDEO";
+
+    const title = document.createElement("h3");
+    title.textContent = video.title;
+
+    const link = document.createElement("a");
+    link.href = video.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "▶ Watch on YouTube";
+
+    info.append(tag, title, link);
+
+    if (adminToken) {
+      const del = document.createElement("button");
+      del.className = "delete";
+      del.textContent = "Delete";
+      del.onclick = () => deleteVideo(video.id);
+      info.appendChild(del);
+    }
+
+    card.append(img, info);
+    container.appendChild(card);
+  });
 }
 
-function showHome(){showList(videos)}
-function showVideos(){showList(videos)}
-function showShorts(){showList(videos.filter(v=>v.short))}
-function showPlaylists(){
- document.getElementById("content").innerHTML="<h2>Playlists</h2><div class='empty'>Coming Soon!</div>";
+function showAll() {
+  currentFilter = "all";
+  document.getElementById("heading").textContent = "Latest Videos";
+  renderVideos();
 }
 
-function showLogin(){
- document.getElementById("content").innerHTML=`
- <h2>Author Login</h2>
- <div class="panel">
- <p>Enter your author name</p>
- <input id="author" placeholder="Author name">
- <button class="primary" onclick="login()">Continue</button>
- <p id="status"></p>
- </div>`;
+function showShorts() {
+  currentFilter = "shorts";
+  document.getElementById("heading").textContent = "YouTube Shorts";
+  renderVideos();
 }
 
-function login(){
- let name=document.getElementById("author").value.trim();
- if(name==="naazaman7"){
-  showAdmin();
- }else{
-  document.getElementById("status").innerText="Incorrect author name!";
- }
+function openLogin() {
+  if (adminToken) {
+    openAdd();
+    return;
+  }
+  document.getElementById("loginModal").style.display = "flex";
 }
 
-function showAdmin(){
- let html=`
- <h2>Creator Studio</h2>
- <div class="panel">
- <h3>Add YouTube Video</h3>
- <input id="videoLink" placeholder="Paste YouTube video link">
- <input id="videoTitle" placeholder="Video title">
- <button class="primary" onclick="addVideo()">Publish Video</button>
- <p id="status"></p>
- </div>
- <h2>Manage Videos</h2><div class="grid">`;
-
- videos.forEach((v,i)=>{
- html+=`
- <div class="video">
- <img src="${v.thumbnail}">
- <div class="title">${escapeHTML(v.title)}</div>
- <button class="delete" onclick="deleteVideo(${i})">Delete</button>
- </div>`;
- });
- document.getElementById("content").innerHTML=html+"</div>";
+function closeLogin() {
+  document.getElementById("loginModal").style.display = "none";
 }
 
-function getVideoID(link){
- try{
-  let u=new URL(link);
-  if(u.hostname==="youtu.be")return u.pathname.slice(1).split("/")[0];
-  if(u.pathname==="/watch")return u.searchParams.get("v");
-  if(u.pathname.includes("/shorts/")||u.pathname.includes("/embed/"))
-   return u.pathname.split("/")[2];
- }catch(e){}
- return null;
+async function login() {
+  const key = document.getElementById("adminKey").value;
+  const status = document.getElementById("loginStatus");
+  status.textContent = "Checking...";
+
+  try {
+    await apiRequest("POST", { action: "check" }, key);
+    adminToken = key;
+    sessionStorage.setItem("naaz_admin_token", key);
+    closeLogin();
+    openAdd();
+    renderVideos();
+  } catch (error) {
+    status.textContent = "Incorrect password. Please try again";
+  }
 }
 
-function addVideo(){
- let link=document.getElementById("videoLink").value.trim();
- let title=document.getElementById("videoTitle").value.trim();
- let id=getVideoID(link);
- let status=document.getElementById("status");
-
- if(!id||!/^[A-Za-z0-9_-]{11}$/.test(id)){
-  status.innerText="Valid YouTube link paste karo!";
-  return;
- }
- if(!title){
-  status.innerText="Video title enter karo!";
-  return;
- }
-
- videos.unshift({
-  id:id,
-  url:"https://www.youtube.com/watch?v="+id,
-  title:title,
-  thumbnail:"https://i.ytimg.com/vi/"+id+"/hqdefault.jpg",
-  short:link.includes("/shorts/")
- });
- save();
- showAdmin();
+function openAdd() {
+  document.getElementById("addModal").style.display = "flex";
 }
 
-function deleteVideo(i){
- if(confirm("Delete this video?")){
-  videos.splice(i,1);
-  save();
-  showAdmin();
- }
+function closeAdd() {
+  document.getElementById("addModal").style.display = "none";
 }
 
-function toggleTheme(){
- document.body.style.background=
- document.body.style.background==="black"?"white":"black";
- document.body.style.color=
- document.body.style.color==="white"?"#171717":"white";
+function getVideoId(url) {
+  try {
+    const parsed = new URL(url);
+    let id = "";
+
+    if (parsed.hostname.includes("youtu.be")) {
+      id = parsed.pathname.slice(1);
+    } else if (parsed.hostname.includes("youtube.com")) {
+      if (parsed.pathname === "/watch") {
+        id = parsed.searchParams.get("v") || "";
+      } else {
+        const parts = parsed.pathname.split("/");
+        if (["shorts", "embed", "live"].includes(parts[1])) {
+          id = parts[2] || "";
+        }
+      }
+    }
+
+    return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+  } catch {
+    return null;
+  }
 }
 
-showHome();
+async function addVideo() {
+  const title = document.getElementById("videoTitle").value.trim();
+  const url = document.getElementById("videoUrl").value.trim();
+  const short = document.getElementById("videoType").value === "true";
+  const status = document.getElementById("addStatus");
+  const id = getVideoId(url);
+
+  if (!title || !id) {
+    status.textContent = "Please enter a valid title and YouTube URL.";
+    return;
+  }
+
+  status.textContent = "Publishing...";
+
+  try {
+    await apiRequest("POST", { id, title, short });
+    document.getElementById("videoTitle").value = "";
+    document.getElementById("videoUrl").value = "";
+    closeAdd();
+    showAll();
+    await loadVideos();
+  } catch (error) {
+    status.textContent = error.message;
+  }
+}
+
+async function deleteVideo(id) {
+  if (!confirm("Are you sure you want to delete this video?")) return;
+
+  try {
+    await apiRequest("DELETE", { id });
+    await loadVideos();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+loadVideos();
 </script>
 </body>
 </html>
+```
