@@ -1,4 +1,3 @@
-```javascript
 import { getStore } from "@netlify/blobs";
 
 const store = getStore("naaz-plaza-videos");
@@ -36,6 +35,11 @@ export default async (request) => {
 
     if (request.method === "POST") {
       const body = await request.json();
+
+      if (body.action === "check") {
+        return json({ success: true });
+      }
+
       const { id, title, short } = body;
 
       if (
@@ -85,4 +89,3 @@ export default async (request) => {
     return json({ error: "Server error" }, 500);
   }
 };
-```
